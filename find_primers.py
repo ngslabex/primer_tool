@@ -42,8 +42,8 @@ class parseInput(object):
     ## Handles the parsing of the input file 
         
     def __init__(self,input_file_path):
-
-        self.inp = open(input_file_path,'U')
+# input_file_path,'rU' replaced by 'r'
+        self.inp = open(input_file_path,'r')
 
     def main(self):
 
@@ -63,8 +63,8 @@ class parseInput(object):
                     if self.checkSeq(tseq):
                         seqO = Sequence(iden,tseq)  
                         seqs[cntr] = seqO
-                except InputError,e:
-                    print e
+                except InputError(e):
+                    print (e)
                     sys.exit()
                      
                 ## re-initializing        
@@ -211,8 +211,8 @@ class Primers(object):
         
         set_length = (num_seqs-1)/segments
         remainder  = (num_seqs-1)%segments
-        
-        seg_arr = [set_length]*segments
+#  'float' error fixed.       
+        seg_arr = [set_length]*int(segments)
         c = 1
         while c <= remainder:
             seg_arr[c-1] += 1
@@ -307,4 +307,3 @@ if __name__ == '__main__':
     pInst = Primers(inp,out,oL,eL)
     pInst.main_primers()
     pInst.junction_primers()
-
